@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Stair Climbing Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Register New User</h1>
+        <form method="POST" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.name.label }}<br>
+                {{ form.name(size=32) }}<br>
+                {% for error in form.name.errors %}
+                <span class="error">[{{ error }}]</span><br>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.profile_pic.label }}<br>
+                {{ form.profile_pic }}<br>
+                {% for error in form.profile_pic.errors %}
+                <span class="error">[{{ error }}]</span><br>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.submit(class="button") }}
+            </div>
+        </form>
+        <a class="button" href="{{ url_for('dashboard') }}">Go to Dashboard</a>
+    </div>
+</body>
+</html>

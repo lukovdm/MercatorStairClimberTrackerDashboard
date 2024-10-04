@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Stair Climbing Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .mountain-container {
+            position: relative;
+            height: 600px;
+            width: 100%;
+            background-image: url('{{ url_for('static', filename='mount_everest.jpg') }}');
+            background-size: cover;
+            background-position: center;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mercator Stair Climbing Tracker Dashboard</h1>
+
+        <div class="mountain-container">
+            {% for user in users %}
+            <img class="profile-head" src="{{ url_for('profile_pics', filename=user.profile_pic) }}"
+                style="left: {{ (loop.index - 1) * 10 }}%; bottom: {{ (user.total_stairs() * 0.17 / 8848) * 100 }}%;" alt="{{ user.name }}">
+            {% endfor %}
+        </div>
+
+        <ul class="user-list">
+            {% for user in users %}
+            <li>
+                <div class="user-section">
+                    <div class="user-stats">
+                        <img class="profile-pic" src="{{ url_for('profile_pics', filename=user.profile_pic) }}">
+                        <div class="user-info">
+                            <p><strong>{{ user.name }}</strong></p>
+                            <p>Total Levels Climbed: {{ user.total_stairs() }}</p>
+                            <p>Height Climbed: {{ (user.total_stairs() * 3) | round(2) }} meters</p>
+                            <p>Progress: {{ (user.total_stairs() * 3 / 8848) * 100 | round(3) }}% towards Everest</p>
+                        </div>
+                    </div>
+
+                    <form method="POST" action="{{ url_for('log_stairs', user_id=user.id) }}">
+                        {{ forms[user.id].hidden_tag() }}
+                        <div class="form-group">
+                            {{ forms[user.id].stairs_climbed.label }}
+                            {{ forms[user.id].stairs_climbed(size=32) }}
+                            {% for error in forms[user.id].stairs_climbed.errors %}
+                            <span class="error">[{{ error }}]</span><br>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            {{ forms[user.id].submit(class="button") }}
+                        </div>
+                    </form>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <a class="button" href="{{ url_for('register') }}">Register</a>
+    </div>
+</body>
+</html>
