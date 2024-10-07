@@ -35,7 +35,19 @@
             <li>
                 <div class="user-section">
                     <div class="user-stats">
-                        <img class="profile-pic" src="{{ url_for('profile_pics', filename=user.profile_pic) }}">
+                        <div style="display: flex; align-items: center;">
+                            <img class="profile-pic" src="{{ url_for('profile_pics', filename=user.profile_pic) }}">
+                            <form method="POST" action="{{ url_for('log_stairs', user_id=user.id) }}">
+                                {{ forms[user.id].hidden_tag() }}
+                                {{ forms[user.id].stairs_climbed(size=32, type="hidden", value=5) }}
+                                {{ forms[user.id].submit(class="button", value="Got coffee") }}
+                            </form>
+                            <form method="POST" action="{{ url_for('log_stairs', user_id=user.id) }}">
+                                {{ forms[user.id].hidden_tag() }}
+                                {{ forms[user.id].stairs_climbed(size=32, type="hidden", value=1) }}
+                                {{ forms[user.id].submit(class="button", value="Arrived") }}
+                            </form>
+                        </div>
                         <div class="user-info">
                             <p><strong>{{ user.name }}</strong></p>
                             <p>Total Levels Climbed: {{ user.total_stairs() }}</p>

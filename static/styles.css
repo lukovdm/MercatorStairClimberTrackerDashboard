@@ -60,25 +60,25 @@ a.button:hover {
     margin-bottom: 15px;
 }
 
-.form-group label {
+form label {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
 }
 
-.form-group .error {
+form .error {
     color: red;
     font-size: 0.9em;
 }
 
-.form-group input[type="text"], .form-group input[type="number"], .form-group input[type="file"] {
+form input[type="text"], form input[type="number"], form input[type="file"] {
     width: calc(100% - 20px);
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
-.form-group .button {
+form .button {
     background-color: #007bff;
     color: white;
     width: calc(100%);
@@ -87,7 +87,7 @@ a.button:hover {
     border-radius: 5px;
 }
 
-.form-group .button:hover {
+form .button:hover {
     background-color: #0056b3;
 }
 

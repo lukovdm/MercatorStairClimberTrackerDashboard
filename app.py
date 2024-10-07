@@ -2,6 +2,8 @@ from crypt import methods
 
 from alembic.util.compat import importlib_resources
 from flask import Flask, render_template, redirect, url_for, flash, send_from_directory
+from sqlalchemy import select, func
+
 from models import db, User, StairClimb
 from forms import RegisterForm, AddStairsForm
 from config import Config
@@ -17,7 +19,8 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
 
 @app.route('/')
 def dashboard():
-    users = User.query.all()
+    res = db.session.execute(select(User).join(StairClimb).group_by(User.id).order_by(func.max(StairClimb.timestamp).desc()))
+    users = [r[0] for r in res]
     forms = {user.id: AddStairsForm() for user in users}
     return render_template('dashboard.html', users=users, forms=forms)
 
