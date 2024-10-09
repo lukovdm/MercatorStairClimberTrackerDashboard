@@ -19,7 +19,7 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
 
 @app.route('/')
 def dashboard():
-    res = db.session.execute(select(User).join(StairClimb).group_by(User.id).order_by(func.max(StairClimb.timestamp).desc()))
+    res = db.session.execute(select(User).outerjoin(StairClimb).group_by(User.id).order_by(func.max(StairClimb.timestamp).desc()))
     users = [r[0] for r in res]
     forms = {user.id: AddStairsForm() for user in users}
     return render_template('dashboard.html', users=users, forms=forms)
