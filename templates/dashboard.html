@@ -17,6 +17,8 @@
             margin-bottom: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-around;
         }
     </style>
 </head>
@@ -26,8 +28,10 @@
 
         <div class="mountain-container">
             {% for user in users %}
-            <img class="profile-head" src="{{ url_for('profile_pics', filename=user.profile_pic) }}"
-                style="left: {{ (loop.index - 1) * 7.5 }}%; bottom: {{ (user.total_stairs() * 3.13 / 8848) * 100 }}%;" alt="{{ user.name }}">
+            <div class="profile-head-container">
+                <img class="profile-head" src="{{ url_for('profile_pics', filename=user.profile_pic) }}"
+                    style="bottom: {{ (user.total_stairs() * 3.13 / 8848) * 100 }}%;" alt="{{ user.name }}">
+            </div>
             {% endfor %}
         </div>
 
